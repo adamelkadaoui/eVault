@@ -1,0 +1,6 @@
+@eVault_HostAddress = http://localhost:5089
+
+GET {{eVault_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
