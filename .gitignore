@@ -1,0 +1,64 @@
+# Fichiers générés par Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Fichiers générés par le système
+.DS_Store
+Thumbs.db
+
+# Fichiers de build et binaires
+bin/
+obj/
+out/
+
+# Fichiers de logs
+*.log
+logs/
+
+# Fichiers de configuration utilisateur
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Fichiers de débogage et crash dumps
+*.pdb
+*.mdb
+*.opendb
+*.ldf
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*.cache
+*.ide
+
+# Fichiers de packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Fichiers de publication
+publish/
+wwwroot/
+
+# Secrets et fichiers sensibles
+secrets.json
+.env
+
+# Fichiers de dépendances locales
+project.lock.json
+project.fragment.lock.json
+
+# Fichiers de test
+TestResults/
+*.trx
+*.coverage
+
+# Fichiers générés par Rider/JetBrains
+.idea/
+*.sln.iml
+
+# Fichiers de conteneurisation
+docker-compose.override.yml
