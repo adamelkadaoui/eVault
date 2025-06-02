@@ -3,48 +3,46 @@ using System.Threading.Tasks;
 using eVaultAPI.Models;
 using eVaultAPI.Interfaces;
 
-namespace eVaultAPI.Controllers
+namespace eVaultAPI.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class ArchiveController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ArchiveController : ControllerBase
+    private readonly IArchiveService _archiveService;
+    public ArchiveController(IArchiveService archiveService)
     {
-        private readonly IArchiveService _archiveService;
+        _archiveService = archiveService;
+    }
 
-        public ArchiveController(IArchiveService archiveService)
+    [HttpPost("upload")]
+    public async Task<IActionResult> UploadDocument([FromBody] ArchiveModel document)
+    {
+        if (document == null || document.FileContent == null)
         {
-            _archiveService = archiveService;
+            return BadRequest("Invalid document.");
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> UploadDocument([FromBody] ArchiveModel document)
-        {
-            if (document == null || document.FileContent == null)
-            {
-                return BadRequest("Invalid document.");
-            }
+        var result = await _archiveService.UploadDocumentAsync(document);
+        return Ok(result);
+    }
 
-            var result = await _archiveService.UploadDocumentAsync(document);
-            return Ok(result);
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetDocument(string id)
+    {
+        var document = await _archiveService.GetDocumentAsync(id);
+        if (document == null)
+        {
+            return NotFound();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDocument(string id)
-        {
-            var document = await _archiveService.GetDocumentAsync(id);
-            if (document == null)
-            {
-                return NotFound();
-            }
+        return Ok(document);
+    }
 
-            return Ok(document);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDocument(string id)
-        {
-            await _archiveService.DeleteDocumentAsync(id);
-            return NoContent();
-        }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteDocument(string id)
+    {
+        await _archiveService.DeleteDocumentAsync(id);
+        return NoContent();
     }
 }

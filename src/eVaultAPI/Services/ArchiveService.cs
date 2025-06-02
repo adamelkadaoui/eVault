@@ -6,100 +6,89 @@ using System.Threading.Tasks;
 using eVaultAPI.Interfaces;
 using eVaultAPI.Models;
 
-namespace eVaultAPI.Services
+namespace eVaultAPI.Services;
+
+public class ArchiveService(string storagePath) : IArchiveService
 {
-    public class ArchiveService : IArchiveService
+  private readonly string _storagePath = storagePath;
+  public async Task ArchiveDocumentAsync(ArchiveModel archiveModel)
+  {
+        var filePath = Path.Combine(_storagePath, archiveModel.FileName);
+        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        {
+        await stream.WriteAsync(archiveModel.FileContent.AsMemory(0, archiveModel.FileContent.Length));
+        }
+
+        archiveModel.Status = "Archived";
+        archiveModel.UpdatedAt = DateTime.UtcNow;
+    }
+
+    public string ComputeHash(byte[] fileContent)
     {
-        private readonly string _storagePath;
+        using var sha256 = SHA256.Create();
+        var hashBytes = sha256.ComputeHash(fileContent);
+        return Convert.ToBase64String(hashBytes);
+    }
 
-        public ArchiveService(string storagePath)
+    public async Task<ArchiveModel> GetDocumentAsync(string id)
         {
-            _storagePath = storagePath;
+        var filePath = Path.Combine(_storagePath, id);
+        if (!File.Exists(filePath))
+        {
+            return null;
         }
 
-        public async Task ArchiveDocumentAsync(ArchiveModel archiveModel)
+        var fileContent = await File.ReadAllBytesAsync(filePath);
+        return new ArchiveModel
         {
-            var filePath = Path.Combine(_storagePath, archiveModel.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                await stream.WriteAsync(archiveModel.FileContent, 0, archiveModel.FileContent.Length);
-            }
+            Id = id,
+            FileName = Path.GetFileName(filePath),
+            FilePath = filePath,
+            FileContent = fileContent,
+            Status = "Retrieved",
+            CreatedAt = File.GetCreationTimeUtc(filePath),
+            UpdatedAt = File.GetLastWriteTimeUtc(filePath)
+        };
+    }
 
-            archiveModel.Status = "Archived";
-            archiveModel.UpdatedAt = DateTime.UtcNow;
+    public async Task SaveDocumentAsync(ArchiveModel document)
+    {
+        var filePath = Path.Combine(_storagePath, document.FileName);
+         using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        {
+            await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
         }
 
-        public string ComputeHash(byte[] fileContent)
+        document.Status = "Archived";
+        document.UpdatedAt = DateTime.UtcNow;
+    }
+
+    public Task ValidateDocumentAsync(ArchiveModel document)
+    {
+        document.Status = "Validated";
+        document.UpdatedAt = DateTime.UtcNow;
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteDocumentAsync(string id)
+    {
+        var filePath = Path.Combine(_storagePath, id);
+        if (File.Exists(filePath))
         {
-            using (var sha256 = SHA256.Create())
-            {
-                var hashBytes = sha256.ComputeHash(fileContent);
-                return Convert.ToBase64String(hashBytes);
-            }
+             File.Delete(filePath);
         }
+        return Task.CompletedTask;
+    }
 
-        public async Task<ArchiveModel> GetDocumentAsync(string id)
+    public async Task<ArchiveModel> UploadDocumentAsync(ArchiveModel document)
+    {
+        var filePath = Path.Combine(_storagePath, document.FileName);
+        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
         {
-            var filePath = Path.Combine(_storagePath, id);
-            if (!File.Exists(filePath))
-            {
-                return null;
-            }
-
-            var fileContent = await File.ReadAllBytesAsync(filePath);
-            return new ArchiveModel
-            {
-                Id = id,
-                FileName = Path.GetFileName(filePath),
-                FilePath = filePath,
-                FileContent = fileContent,
-                Status = "Retrieved",
-                CreatedAt = File.GetCreationTimeUtc(filePath),
-                UpdatedAt = File.GetLastWriteTimeUtc(filePath)
-            };
+            await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
         }
-
-        public async Task SaveDocumentAsync(ArchiveModel document)
-        {
-            var filePath = Path.Combine(_storagePath, document.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                await stream.WriteAsync(document.FileContent, 0, document.FileContent.Length);
-            }
-
-            document.Status = "Archived";
-            document.UpdatedAt = DateTime.UtcNow;
-        }
-
-        public Task ValidateDocumentAsync(ArchiveModel document)
-        {
-            document.Status = "Validated";
-            document.UpdatedAt = DateTime.UtcNow;
-            return Task.CompletedTask;
-        }
-
-        public Task DeleteDocumentAsync(string id)
-        {
-            var filePath = Path.Combine(_storagePath, id);
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            return Task.CompletedTask;
-        }
-
-        public async Task<ArchiveModel> UploadDocumentAsync(ArchiveModel document)
-        {
-            var filePath = Path.Combine(_storagePath, document.FileName);
-            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                await stream.WriteAsync(document.FileContent, 0, document.FileContent.Length);
-            }
-
-            document.Status = "Uploaded";
-            document.CreatedAt = DateTime.UtcNow;
-            return document;
-        }
+        document.Status = "Uploaded";
+        document.CreatedAt = DateTime.UtcNow;
+        return document;
     }
 }
