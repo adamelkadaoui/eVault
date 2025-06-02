@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IArchiveService, ArchiveService>(provider =>
     new ArchiveService(Path.Combine(Directory.GetCurrentDirectory(), "Storage")));
+builder.Services.AddSingleton<AuditService>();
 
 var app = builder.Build();
 

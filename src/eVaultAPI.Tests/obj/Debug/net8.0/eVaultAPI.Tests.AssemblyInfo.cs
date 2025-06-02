@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eVaultAPI.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52b0b4598eba9ea8c6deecf83e69ebeba52c7f02")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc7f59fa5f5e9317515b271634169abce317f218")]
 [assembly: System.Reflection.AssemblyProductAttribute("eVaultAPI.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eVaultAPI.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
