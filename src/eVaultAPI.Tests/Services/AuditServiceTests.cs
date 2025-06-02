@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Xunit;
 using eVaultAPI.Services;
 using eVaultAPI.Models;
-using eVaultAPI.Interfaces;
 using eVaultAPI.Repositories;
 
 namespace eVaultAPI.Tests.Services;

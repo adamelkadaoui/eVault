@@ -1,0 +1,18 @@
+stages:
+  - test
+
+unit_tests:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+  script:
+    - dotnet restore
+    - dotnet build --no-restore
+    - dotnet test --no-build --logger "trx;LogFileName=test-results.trx"
+  artifacts:
+    when: always
+    reports:
+      junit: "**/TestResults/*.trx"
+    paths:
+      - "**/TestResults/*.trx"
+  only:
+    - branches
