@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using eVaultAPI.Models;
 
 namespace eVaultAPI.Interfaces;
+
 public interface IArchiveService
 {
     Task ArchiveDocumentAsync(ArchiveModel document);

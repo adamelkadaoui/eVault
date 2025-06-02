@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XeMvurcusl/t3B7OxsLYVbHL+AK8va/8+KIDH6QEeQ4GJBMnOyxQzTuj4wRTmd5ey3XSv+ewLkVNvUi4gfVZCg==",
+  "dgSpecHash": "0E0RsHonXSY=",
   "success": true,
   "projectFilePath": "/Users/adam/Documents/projects/perso/evault/src/eVaultAPI/eVaultAPI.csproj",
   "expectedPackageFiles": [
@@ -88,7 +88,10 @@
     "/Users/adam/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
     "/Users/adam/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
     "/Users/adam/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/Users/adam/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
+    "/Users/adam/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/Users/adam/.nuget/packages/microsoft.netcore.app.ref/8.0.16/microsoft.netcore.app.ref.8.0.16.nupkg.sha512",
+    "/Users/adam/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.16/microsoft.aspnetcore.app.ref.8.0.16.nupkg.sha512",
+    "/Users/adam/.nuget/packages/microsoft.netcore.app.host.osx-x64/8.0.16/microsoft.netcore.app.host.osx-x64.8.0.16.nupkg.sha512"
   ],
   "logs": []
 }

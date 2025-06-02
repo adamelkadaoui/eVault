@@ -14,10 +14,8 @@ public class ArchiveService(string storagePath) : IArchiveService
   public async Task ArchiveDocumentAsync(ArchiveModel archiveModel)
   {
         var filePath = Path.Combine(_storagePath, archiveModel.FileName);
-        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        {
+        await using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
         await stream.WriteAsync(archiveModel.FileContent.AsMemory(0, archiveModel.FileContent.Length));
-        }
 
         archiveModel.Status = "Archived";
         archiveModel.UpdatedAt = DateTime.UtcNow;
@@ -54,10 +52,8 @@ public class ArchiveService(string storagePath) : IArchiveService
     public async Task SaveDocumentAsync(ArchiveModel document)
     {
         var filePath = Path.Combine(_storagePath, document.FileName);
-         using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        {
-            await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
-        }
+        await using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+        await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
 
         document.Status = "Archived";
         document.UpdatedAt = DateTime.UtcNow;
@@ -83,10 +79,9 @@ public class ArchiveService(string storagePath) : IArchiveService
     public async Task<ArchiveModel> UploadDocumentAsync(ArchiveModel document)
     {
         var filePath = Path.Combine(_storagePath, document.FileName);
-        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        {
-            await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
-        }
+        await using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write); 
+        await stream.WriteAsync(document.FileContent.AsMemory(0, document.FileContent.Length));
+        
         document.Status = "Uploaded";
         document.CreatedAt = DateTime.UtcNow;
         return document;

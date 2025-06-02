@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using eVaultAPI.Models;
 
 namespace eVaultAPI.Services;
+
 public class AuditService
 {
     private readonly List<AuditEntry> _entries = new();

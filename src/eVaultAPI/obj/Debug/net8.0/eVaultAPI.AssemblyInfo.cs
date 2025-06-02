@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eVaultAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc7f59fa5f5e9317515b271634169abce317f218")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12e15d4e84c1eaa339b26de518ad9d992de50e35")]
 [assembly: System.Reflection.AssemblyProductAttribute("eVaultAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eVaultAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
