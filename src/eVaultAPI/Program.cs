@@ -1,4 +1,5 @@
 using eVaultAPI.Interfaces;
+using eVaultAPI.Repositories;
 using eVaultAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IArchiveService, ArchiveService>(provider =>
     new ArchiveService(Path.Combine(Directory.GetCurrentDirectory(), "Storage")));
+builder.Services.AddSingleton<IAuditRepository, InMemoryAuditRepository>();
 builder.Services.AddSingleton<AuditService>();
 
 var app = builder.Build();

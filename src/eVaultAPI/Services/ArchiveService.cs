@@ -41,7 +41,6 @@ public class ArchiveService(string storagePath) : IArchiveService
         {
             Id = id,
             FileName = Path.GetFileName(filePath),
-            FilePath = filePath,
             FileContent = fileContent,
             Status = "Retrieved",
             CreatedAt = File.GetCreationTimeUtc(filePath),

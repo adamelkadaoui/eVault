@@ -1,24 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using eVaultAPI.Interfaces;
 using eVaultAPI.Models;
 
 namespace eVaultAPI.Services;
 
-public class AuditService
+public class AuditService(IAuditRepository repository) : IAuditService
 {
-    private readonly List<AuditEntry> _entries = new();
-    public Task LogAsync(string user, string action, string documentId, string details = null)
+
+    public async Task LogAsync(string user, AuditAction action, string documentId, string details = null)
     {
-        _entries.Add(new AuditEntry
+        var entry = new AuditEntry
         {
             User = user,
             Action = action,
             DocumentId = documentId,
             Timestamp = DateTime.UtcNow,
             Details = details
-        });
-        return Task.CompletedTask;
+        };
+        await repository.SaveAsync(entry);
     }
-    public Task<List<AuditEntry>> GetAllAsync() => Task.FromResult(_entries);
+
+    public Task<List<AuditEntry>> GetAllAsync() => repository.GetAllAsync();
 }
